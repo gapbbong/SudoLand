@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SudoLand - 수도 맞히기 퀴즈</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>🌍 <span>SudoLand</span></h1>
+            <p>나라 이름을 검색하고 수도를 맞혀보세요!</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" id="countryInput" placeholder="예: 대한민국, France, 일본..." autocomplete="off">
+                <button id="searchBtn">검색</button>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </section>
+
+        <div id="loadingIndicator" class="loading hidden">
+            <div class="spinner"></div>
+            <p>세계 지도 데이터를 불러오는 중입니다...</p>
+        </div>
+
+        <section id="quizSection" class="quiz-section hidden">
+            <h2 id="quizQuestion" class="quiz-question"></h2>
+            <div id="optionsContainer" class="options-container">
+            </div>
+            <div id="resultMessage" class="result-message"></div>
+        </section>
+
+        <section id="suggestionsSection" class="suggestions-section hidden">
+            <h3>다른 나라들도 도전해보세요 ✨</h3>
+            <div id="suggestionsContainer" class="suggestions-container">
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
