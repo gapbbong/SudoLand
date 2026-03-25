@@ -29,7 +29,43 @@ const capitalKoMap = {
     "Bratislava": "브라티슬라바", "Ljubljana": "류블랴나", "Tallinn": "탈린", "Riga": "리가",
     "Vilnius": "빌뉴스", "Yerevan": "예레반", "Baku": "바쿠", "Tbilisi": "트빌리시",
     "Kigali": "키갈리", "Kampala": "캄팔라", "Monaco": "모나코", "Vatican City": "바티칸 시국",
-    "San Marino": "산마리노", "Valletta": "발레타", "Nicosia": "니코시아"
+    "San Marino": "산마리노", "Valletta": "발레타", "Nicosia": "니코시아",
+    "Bamako": "바마코", "Conakry": "코나크리", "Niamey": "니아메", "Ouagadougou": "와가두구",
+    "Nouakchott": "누악쇼트", "Lomé": "로메", "Porto-Novo": "포르토노보", "Freetown": "프리타운",
+    "Monrovia": "몬로비아", "Banjul": "반줄", "Bissau": "비사우", "Praia": "프라이아",
+    "Yamoussoukro": "야무수크로", "Abidjan": "아비장", "Yaoundé": "야운데", "Bangui": "방기",
+    "Malabo": "말라보", "Libreville": "리브르빌", "Brazzaville": "브라자빌", "Kinshasa": "킨샤사",
+    "São Tomé": "상투메", "Bujumbura": "부줌부라", "Gitega": "기테가", "Djibouti": "지부티",
+    "Asmara": "아스마라", "Juba": "주바", "Windhoek": "빈트후크", "Gaborone": "가보로네",
+    "Maseru": "마세루", "Mbabane": "음바바네", "Lobamba": "로밤바", "Lusaka": "루사카",
+    "Lilongwe": "릴롱궤", "Dodoma": "도도마", "Dar es Salaam": "다르에스살람", "Victoria": "빅토리아",
+    "Moroni": "모로니", "Port Louis": "포트루이스", "Bishkek": "비슈케크", "Dushanbe": "두샨베",
+    "Ashgabat": "아시가바트", "Thimphu": "팀부", "Malé": "말레", "Bandar Seri Begawan": "반다르스리브가완",
+    "Dili": "딜리", "Funafuti": "푸나푸티", "Yaren": "야렌", "Tarawa": "타라와", "South Tarawa": "사우스타라와",
+    "Majuro": "마주로", "Palikir": "팔리키르", "Ngerulmud": "응게룰무드", "Port Vila": "포트빌라",
+    "Honiara": "호니아라", "Nukuʻalofa": "누쿠알로파", "Nukualofa": "누쿠알로파", "Alofi": "알로피",
+    "Avarua": "아바루아", "Mata-Utu": "마타우투", "Nouméa": "누메아", "Papeete": "파페에테",
+    "Reykjavik": "레이캬비크", "Macau": "마카오", "Hong Kong": "홍콩", "Andorra la Vella": "안도라라벨랴",
+    "Vaduz": "파두츠", "Luxembourg": "룩셈부르크", "Chisinau": "키시너우", "Chișinău": "키시너우",
+    "Podgorica": "포드고리카", "Skopje": "스코페", "Pristina": "프리슈티나", "Hargeisa": "하르게이사",
+    "Saipan": "사이판", "San Juan": "산후안", "Kingston": "킹스턴", "Nassau": "나소",
+    "Bridgetown": "브리지타운", "St. John's": "세인트존스", "Saint John's": "세인트존스",
+    "Port of Spain": "포트오브스페인", "Belmopan": "벨모판", "Guatemala City": "과테말라시티",
+    "Tegucigalpa": "테구시갈파", "San Salvador": "산살바도르", "Managua": "마나과", "San José": "산호세",
+    "Panama City": "파나마시티", "Georgetown": "조지타운", "Paramaribo": "파라마리보",
+    "Cayenne": "카옌", "Stanley": "스탠리", "Grytviken": "그리트비켄", "Torshavn": "토르스하운",
+    "Tórshavn": "토르스하운", "Nuuk": "누크", "Douglas": "더글러스", "St. Helier": "세인트헬리어",
+    "Saint Helier": "세인트헬리어", "St. Peter Port": "세인트피터포트", "Saint Peter Port": "세인트피터포트",
+    "Mariehamn": "마리에함", "Longyearbyen": "롱이어비엔", "Banjarmasin": "반자르마신", 
+    "Port-au-Prince": "포르토프랭스", "Santo Domingo": "산토도밍고", "Hagåtña": "하갓냐",
+    "Charlotte Amalie": "샬럿아말리에", "Cockburn Town": "코번타운", "Hamilton": "해밀턴",
+    "George Town": "조지타운", "Road Town": "로드타운", "The Valley": "더밸리", "Basse-Terre": "바스테르",
+    "Fort-de-France": "포르드프랑스", "Gustavia": "구스타비아", "Marigot": "마리고",
+    "Oranjestad": "오라녜스타트", "Willemstad": "빌렘스타트", "Kralendijk": "크랄렌데이크",
+    "Philipsburg": "필립스뷔르흐", "Gibraltar": "지브롤터", "King Edward Point": "킹에드워드포인트",
+    "Plymouth": "플리머스", "Adamstown": "애덤스타운", "Pago Pago":"파고파고", "Ramallah": "라말라",
+    "El Aaiún": "엘아이운", "St. George's": "세인트조지스", "Castries": "캐스트리스",
+    "Kingstown": "킹스타운", "Roseau": "로조", "Basseterre": "바스테르"
 };
 
 function getCapitalName(capitalEn) {
@@ -54,8 +90,8 @@ async function fetchCountries() {
     try {
         const response = await fetch('https://restcountries.com/v3.1/all?fields=name,capital,translations,flags');
         const data = await response.json();
-        // Filter out countries without capitals to ensure valid questions
-        countriesData = data.filter(c => c.capital && c.capital.length > 0);
+        // Filter out countries without capitals or without Korean translations to ensure valid questions showing ONLY in Korean
+        countriesData = data.filter(c => c.capital && c.capital.length > 0 && capitalKoMap[c.capital[0]]);
     } catch (error) {
         console.error('Error fetching countries:', error);
         errorMessage.textContent = '데이터를 불러오는 데 실패했습니다.';
