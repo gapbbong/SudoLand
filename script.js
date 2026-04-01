@@ -1,4 +1,43 @@
 let countriesData = [];
+let currentLevel = 1;
+
+const levels = {
+    1: [
+        "South Korea", "United States", "Japan", "China", "United Kingdom", 
+        "France", "Germany", "Canada", "Russia", "Australia", 
+        "Brazil", "Vietnam", "Thailand", "India", "Mexico", 
+        "Spain", "Italy", "Egypt", "North Korea", "Taiwan"
+    ],
+    2: [
+        "Switzerland", "Netherlands", "Sweden", "Norway", "Denmark", 
+        "Belgium", "Austria", "Greece", "Portugal", "Poland", 
+        "Turkey", "Saudi Arabia", "United Arab Emirates", "Qatar", "Israel", 
+        "Indonesia", "Malaysia", "Singapore", "Philippines", "Argentina", 
+        "Chile", "Colombia", "Peru", "South Africa", "Nigeria", 
+        "Kenya", "New Zealand", "Ukraine", "Ireland", "Finland"
+    ],
+    3: [
+        "Kazakhstan", "Iran", "Pakistan", "Bangladesh", "Uzbekistan", 
+        "Mongolia", "Romania", "Hungary", "Czechia", "Morocco", 
+        "Algeria", "Ethiopia", "Ghana", "Ivory Coast", "Tanzania", 
+        "Zimbabwe", "Cuba", "Venezuela", "Ecuador", "Bolivia", 
+        "Paraguay", "Uruguay", "Costa Rica", "Panama", "Jamaica", 
+        "Jordan", "Lebanon", "Kuwait", "Iraq", "Syria", 
+        "Afghanistan", "Nepal", "Sri Lanka", "Cambodia", "Lao People's Democratic Republic", 
+        "Myanmar", "Belarus", "Bulgaria", "Slovakia", "Croatia"
+    ]
+};
+
+function getFilteredCountries() {
+    if (currentLevel === 4) return countriesData;
+    
+    let allowedNames = [];
+    for (let i = 1; i <= currentLevel; i++) {
+        allowedNames = allowedNames.concat(levels[i]);
+    }
+    
+    return countriesData.filter(c => allowedNames.includes(c.name.common));
+}
 
 const capitalKoMap = {
     "Seoul": "서울", "Tokyo": "도쿄", "Beijing": "베이징", "Washington, D.C.": "워싱턴 D.C.",
@@ -83,6 +122,16 @@ const resultMessage = document.getElementById('resultMessage');
 const suggestionsSection = document.getElementById('suggestionsSection');
 const suggestionsContainer = document.getElementById('suggestionsContainer');
 const loadingIndicator = document.getElementById('loadingIndicator');
+const levelButtons = document.querySelectorAll('.level-btn');
+
+levelButtons.forEach(btn => {
+    btn.onclick = () => {
+        levelButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLevel = parseInt(btn.dataset.level);
+        showSuggestions();
+    };
+});
 
 // Load countries data from REST Countries API
 async function fetchCountries() {
@@ -97,6 +146,7 @@ async function fetchCountries() {
         errorMessage.textContent = '데이터를 불러오는 데 실패했습니다.';
     } finally {
         loadingIndicator.classList.add('hidden');
+        showSuggestions();
     }
 }
 
@@ -146,10 +196,13 @@ function startQuiz(country) {
 
     quizQuestion.textContent = `Q. '${countryName}'의 수도는 어디일까요?`;
     
-    // Generate 3 random wrong capitals
+    const filteredPool = getFilteredCountries();
+    
+    // Generate 3 random wrong capitals from the CURRENT LEVEL pool if possible
     let capitals = [correctCapital];
     while(capitals.length < 4) {
-        const randomCountry = countriesData[Math.floor(Math.random() * countriesData.length)];
+        const pool = filteredPool.length >= 4 ? filteredPool : countriesData;
+        const randomCountry = pool[Math.floor(Math.random() * pool.length)];
         const randomCapital = randomCountry.capital[0];
         // Ensure standard unique capitals
         if (!capitals.includes(randomCapital)) {
@@ -202,9 +255,13 @@ function showSuggestions(excludeName) {
     suggestionsContainer.innerHTML = '';
     let suggestions = [];
     
-    // Pick 4 random countries for suggestions
-    while(suggestions.length < 4) {
-        const randomCountry = countriesData[Math.floor(Math.random() * countriesData.length)];
+    const filteredPool = getFilteredCountries();
+    if (filteredPool.length === 0) return;
+
+    // Pick 4 random countries for suggestions from the filtered pool
+    const maxSuggestions = Math.min(4, filteredPool.length);
+    while(suggestions.length < maxSuggestions) {
+        const randomCountry = filteredPool[Math.floor(Math.random() * filteredPool.length)];
         const rNameKo = randomCountry.translations?.kor?.common;
         const rNameEn = randomCountry.name.common;
         const nameToShow = rNameKo || rNameEn;
